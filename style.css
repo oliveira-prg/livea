@@ -1,0 +1,107 @@
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* tons mais escuros */
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    #game-area {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    #heart {
+      position: absolute;
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+      filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7)); /* brilho dourado */
+    }
+
+    #message {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #f5f5f5;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+      letter-spacing: 1px;
+    }
+
+    #final-message {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 600px;
+      padding: 25px;
+      border-radius: 20px;
+      background: rgba(20, 20, 30, 0.8); /* fundo escuro translúcido */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      text-align: center;
+      color: #e0e0e0;
+      font-size: 1.3rem;
+      line-height: 1.8;
+      animation: fadeIn 1s ease forwards;
+      border: 1px solid rgba(255, 215, 0, 0.4); /* detalhe dourado */
+    }
+
+    .verse {
+      display: none;
+      margin: 15px 0;
+      font-style: italic;
+      color: #f8f8f2;
+    }
+
+    #spotify-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      background: #1DB954;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    #spotify-btn:hover {
+      background: #14833b;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -40%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    /* corações caindo */
+    .falling-heart {
+      position: fixed;
+      top: -50px;
+      font-size: 1.5rem;
+      color: #FFD700; /* dourado */
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
