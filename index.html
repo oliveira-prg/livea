@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Capture o Coração da Lívea ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* tons mais escuros */
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    #game-area {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    #heart {
+      position: absolute;
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+      filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7)); /* brilho dourado */
+    }
+
+    #message {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #f5f5f5;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+      letter-spacing: 1px;
+    }
+
+    #final-message {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 600px;
+      padding: 25px;
+      border-radius: 20px;
+      background: rgba(20, 20, 30, 0.8); /* fundo escuro translúcido */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      text-align: center;
+      color: #e0e0e0;
+      font-size: 1.3rem;
+      line-height: 1.8;
+      animation: fadeIn 1s ease forwards;
+      border: 1px solid rgba(255, 215, 0, 0.4); /* detalhe dourado */
+    }
+
+    .verse {
+      display: none;
+      margin: 15px 0;
+      font-style: italic;
+      color: #f8f8f2;
+    }
+
+    #spotify-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      background: #1DB954;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    #spotify-btn:hover {
+      background: #14833b;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -40%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    /* corações caindo */
+    .falling-heart {
+      position: fixed;
+      top: -50px;
+      font-size: 1.5rem;
+      color: #FFD700; /* dourado */
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="game-area">
+    <div id="message">Capture meu coração, Lívea 💖</div>
+    <div id="heart">❤️</div>
+    <div id="final-message">
+      <div class="verse">Te conheci num dia qualquer, numa tarde qualquer</div>
+      <div class="verse">Desde aquele dia, a gente foi conversando <br>
+                         e eu fui me encantando com você.<br>
+                         assim como o pequeno príncipe se encanta pela raposa</div>
+      <div class="verse">E entre sorrisos e encontros ao acaso,</div>
+      <div class="verse">o tempo quis me mostrar você.</div>
+      <div class="verse">Não é promessa nem pressa,</div>
+      <div class="verse">é só a calma de sentir que algo é raro.</div>
+     <a id="spotify-btn" href="https://open.spotify.com/intl-pt/track/6QAsrXPnMSXIbV0yEJHlEX?si=f7cc2238d5ed475b" target="_blank">Pra você, clique aqui</a>
+    </div>
+  </div>
+
+  <script>
+    const heart = document.getElementById("heart");
+    const finalMessage = document.getElementById("final-message");
+    const gameArea = document.getElementById("game-area");
+    const verses = document.querySelectorAll(".verse");
+    const spotifyBtn = document.getElementById("spotify-btn");
+
+    // posição inicial
+    moveHeart();
+
+    // quando clica no coração
+    heart.addEventListener("click", () => {
+      heart.style.display = "none";
+      finalMessage.style.display = "block";
+      showVerses();
+      startFallingHearts();
+    });
+
+    // faz o coração se mexer sozinho
+    function moveHeart() {
+      const areaWidth = gameArea.clientWidth - 50;
+      const areaHeight = gameArea.clientHeight - 50;
+
+      setInterval(() => {
+        const x = Math.random() * areaWidth;
+        const y = Math.random() * areaHeight;
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        heart.style.transform = "scale(1.2)";
+        setTimeout(() => { heart.style.transform = "scale(1)"; }, 200);
+      }, 1000);
+    }
+
+    // revela o poema verso por verso
+    function showVerses() {
+      let delay = 0;
+      verses.forEach((verse, index) => {
+        setTimeout(() => {
+          verse.style.display = "block";
+        }, delay);
+        delay += 2000; // cada verso aparece 2s depois do anterior
+      });
+      // mostra o botão no final
+      setTimeout(() => {
+        spotifyBtn.style.display = "inline-block";
+      }, delay + 500);
+    }
+
+    // efeito de corações caindo
+    function startFallingHearts() {
+      setInterval(() => {
+        const heartEl = document.createElement("div");
+        heartEl.classList.add("falling-heart");
+        heartEl.textContent = "❤️";
+        heartEl.style.left = Math.random() * 100 + "vw";
+        heartEl.style.animationDuration = (3 + Math.random() * 2) + "s";
+        document.body.appendChild(heartEl);
+
+        setTimeout(() => {
+          heartEl.remove();
+        }, 5000);
+      }, 300);
+    }
+  </script>
+</body>
+</html>
